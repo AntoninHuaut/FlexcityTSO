@@ -1,6 +1,7 @@
 package boot
 
 import (
+	"FlexcityTest/infrastructure/controller"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -9,22 +10,21 @@ import (
 )
 
 func LoadHttpServer() {
-	r := chi.NewRouter()
+	assetController := controller.NewAssetController(assetUsecase)
 
+	r := chi.NewRouter()
 	r.Use(middleware.Heartbeat("/ping"))
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
-	tsoRouter := chi.NewRouter()
-	tsoRouter.Get("/", func(writer http.ResponseWriter, request *http.Request) {
-		writer.Write([]byte("articles"))
-	})
+	assetRouter := chi.NewRouter()
+	assetRouter.Post("/activation", assetController.Activation)
 
 	r.Route("/v1", func(r chi.Router) {
-		r.Mount("/tso", tsoRouter)
+		r.Mount("/assets", assetRouter)
 	})
 
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", HttpPort), r); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%d", httpPort), r); err != nil {
 		log.Fatalf("failed to start http server: %s", err)
 	}
 }

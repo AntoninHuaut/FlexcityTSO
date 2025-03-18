@@ -6,5 +6,6 @@ import (
 
 func main() {
 	boot.LoadEnvironments()
+	boot.LoadServices()
 	boot.LoadHttpServer()
 }

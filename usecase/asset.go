@@ -1,60 +1,61 @@
-package repository
+package usecase
 
 import (
 	"FlexcityTest/domain"
-	"time"
+	"FlexcityTest/infrastructure/repository"
+	"errors"
+	"fmt"
 )
 
-type AssetRepository interface {
-	FindAll() ([]domain.Asset, error)
+type AssetUsecase interface {
+	SelectAssetsForActivation(activationRequest domain.AssetsActivationRequest) (*domain.AssetsActivationResponse, error)
 }
 
-func NewAssetRepository() AssetRepository {
-	return assetRepository{}
+func NewAssetUsecase(assetRepository repository.AssetRepository) AssetUsecase {
+	return assetUsecase{
+		assetRepository: assetRepository,
+	}
 }
 
-type assetRepository struct {
+type assetUsecase struct {
+	assetRepository repository.AssetRepository
 }
 
-func (a assetRepository) FindAll() ([]domain.Asset, error) {
-	allWeekdays := []time.Weekday{time.Monday, time.Tuesday, time.Wednesday, time.Thursday, time.Friday, time.Saturday, time.Sunday}
-	allExceptWeekends := []time.Weekday{time.Monday, time.Tuesday, time.Wednesday, time.Thursday, time.Friday}
+func (a assetUsecase) SelectAssetsForActivation(activationRequest domain.AssetsActivationRequest) (*domain.AssetsActivationResponse, error) {
+	assets, err := a.assetRepository.FindByAvailability(activationRequest.Date.Weekday())
+	if err != nil {
+		return nil, domain.ErrorResponse{
+			NativeError: err,
+			Type:        domain.ErrDatabase,
+		}
+	}
 
-	return []domain.Asset{
-		{
-			Code:           "PUMP_1",
-			Name:           "Pump 1",
-			ActivationCost: 1054,
-			Availability:   allWeekdays,
-			Volume:         100,
-		},
-		{
-			Code:           "PUMP_2",
-			Name:           "Pump 2",
-			ActivationCost: 2850,
-			Availability:   allWeekdays,
-			Volume:         300,
-		},
-		{
-			Code:           "AERATION_1",
-			Name:           "Aeration 1",
-			ActivationCost: 1500,
-			Availability:   allWeekdays,
-			Volume:         175,
-		},
-		{
-			Code:           "AERATION_2",
-			Name:           "Aeration 2",
-			ActivationCost: 2000,
-			Availability:   allExceptWeekends,
-			Volume:         250,
-		},
-		{
-			Code:           "AERATION_3",
-			Name:           "Aeration 3",
-			ActivationCost: 50,
-			Availability:   allWeekdays,
-			Volume:         3000,
-		},
-	}, nil
+	var selectedAssets []domain.Asset
+	totalVolume := 0
+	totalCost := 0
+
+	for _, asset := range assets {
+		if totalVolume >= activationRequest.Volume {
+			break
+		}
+
+		selectedAssets = append(selectedAssets, asset)
+		totalCost += asset.ActivationCost
+		totalVolume += asset.Volume
+	}
+
+	if totalVolume < activationRequest.Volume {
+		return nil, domain.ErrorResponse{
+			NativeError: errors.New(fmt.Sprintf("not enough available assets to satisfy the demand (%d)", activationRequest.Volume)),
+			Type:        domain.ErrNotEnoughAssets,
+		}
+	}
+
+	response := &domain.AssetsActivationResponse{
+		Assets: selectedAssets,
+		Price:  totalCost,
+		Power:  totalVolume,
+	}
+
+	return response, nil
 }
