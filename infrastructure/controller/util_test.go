@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"FlexcityTest/domain"
+	"FlexcityTSO/domain"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"net/http"

@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"FlexcityTest/domain"
+	"FlexcityTSO/domain"
 	"github.com/stretchr/testify/mock"
 	"time"
 )

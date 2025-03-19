@@ -1,7 +1,7 @@
 package boot
 
 import (
-	"FlexcityTest/infrastructure/controller"
+	"FlexcityTSO/infrastructure/controller"
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

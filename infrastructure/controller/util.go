@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"FlexcityTest/domain"
+	"FlexcityTSO/domain"
 	"errors"
 	"github.com/go-chi/render"
 	"github.com/go-playground/validator/v10"

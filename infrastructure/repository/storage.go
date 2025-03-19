@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"FlexcityTest/domain"
+	"FlexcityTSO/domain"
 	"time"
 )
 

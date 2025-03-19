@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"FlexcityTest/domain"
-	"FlexcityTest/internal/mocks"
+	"FlexcityTSO/domain"
+	"FlexcityTSO/internal/mocks"
 	"bytes"
 	"encoding/json"
 	"errors"

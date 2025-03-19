@@ -1,8 +1,8 @@
 package boot
 
 import (
-	"FlexcityTest/infrastructure/repository/memory"
-	"FlexcityTest/usecase"
+	"FlexcityTSO/infrastructure/repository/memory"
+	"FlexcityTSO/usecase"
 )
 
 var (

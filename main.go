@@ -1,7 +1,7 @@
 package main
 
 import (
-	"FlexcityTest/boot"
+	"FlexcityTSO/boot"
 )
 
 func main() {

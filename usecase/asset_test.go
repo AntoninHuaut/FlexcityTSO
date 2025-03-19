@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"FlexcityTest/domain"
-	"FlexcityTest/internal/mocks"
+	"FlexcityTSO/domain"
+	"FlexcityTSO/internal/mocks"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"testing"

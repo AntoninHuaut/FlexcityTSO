@@ -1,8 +1,8 @@
 package memory
 
 import (
-	"FlexcityTest/domain"
-	"FlexcityTest/infrastructure/repository"
+	"FlexcityTSO/domain"
+	"FlexcityTSO/infrastructure/repository"
 	"fmt"
 	"slices"
 	"sort"

@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"FlexcityTest/domain"
-	"FlexcityTest/usecase"
+	"FlexcityTSO/domain"
+	"FlexcityTSO/usecase"
 	"encoding/json"
 	"github.com/go-chi/render"
 	"net/http"

@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"FlexcityTest/domain"
-	"FlexcityTest/infrastructure/repository"
+	"FlexcityTSO/domain"
+	"FlexcityTSO/infrastructure/repository"
 	"errors"
 	"fmt"
 )
