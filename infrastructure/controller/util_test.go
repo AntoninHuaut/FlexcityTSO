@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func TestUtil_DateNotPassed(t *testing.T) {
+func TestUtil_IsFutureDate(t *testing.T) {
 	futureTime := time.Now().Add(time.Hour)
 	pastTime := time.Now().Add(-time.Hour)
 
