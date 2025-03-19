@@ -25,3 +25,4 @@ Define the environment variables in the `values.yaml` file.
 - Tracing
 - Monitoring
 - Helm chart
+- Update CI: Added code linter, vulnerability check, publish image
